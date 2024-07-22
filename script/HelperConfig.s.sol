@@ -3,15 +3,14 @@
 pragma solidity ^0.8.19;
 
 
-import { Script } from 'forge-std/src/Script.sol';
+import { Script } from 'forge-std/Script.sol';
 import { VRFCoordinatorV2Mock } from '../test/Mocks/VRFCoordinatorV2Mock.sol';
 import { MockV3Aggregator } from '../test/Mocks/MockV3Aggregator.sol';
-
+import {LinkToken} from "../test/mocks/LinkToken.sol";
 
 contract HelperConfig is Script {
 
 
-    uint256 public constant DEFAULT_ANVIL_PRIVATE_KEY = 0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6;
     uint256 private constant SEPOLIA_CHAINID = 11155111 ;
     uint96 private constant BASE_FEE = 0.25 ether;
     uint96 private constant GAS_PRICE_LINK = 1e9;
@@ -26,10 +25,12 @@ contract HelperConfig is Script {
 
         
         address pricefee;
+        bytes32 gasLane ;
         uint256  interval;
         address vrfCoordinator;
         uint64 subId;
         uint32 callbackGasLimit;
+        address link ;
         uint256 deployKey;
 
 
@@ -57,10 +58,12 @@ contract HelperConfig is Script {
         return Networkconfig({
 
             pricefee : 0xc934f4B8b3657D86918FD74c398E2aD9A83D78DA,
+            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
             interval : 30,
             vrfCoordinator  :0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266,
             subId : 0,
             callbackGasLimit  : 5000,
+            link : 0x779877A7B0D9E8603169DdbD7836e478b4624789,
             deployKey : vm.envUint('PRIVATE_KEY') // Sepolia Private Key  
 
         });
@@ -80,17 +83,20 @@ contract HelperConfig is Script {
 
         VRFCoordinatorV2Mock vrf = new VRFCoordinatorV2Mock(BASE_FEE,GAS_PRICE_LINK);
         MockV3Aggregator price = new MockV3Aggregator(DECIMAL , INITAIL_ANWSER);
-
+        LinkToken link = new LinkToken();
+        
         vm.stopBroadcast();
 
          return Networkconfig({
 
             pricefee : address(price),
+            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c, // doesn't really matter
             interval : 30,
             vrfCoordinator  : address(vrf),
             subId : 0,
             callbackGasLimit  : 5e7,
-            deployKey : DEFAULT_ANVIL_PRIVATE_KEY
+            link : address(link),
+            deployKey : vm.envUint('DEFAULT_ANVIL_KEY')
             
         });
 

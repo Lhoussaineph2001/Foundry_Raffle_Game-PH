@@ -23,9 +23,9 @@ contract VRFCoordinatorV2Mock is VRFCoordinatorV2Interface, ConfirmedOwner {
   error InvalidRandomWords();
   error Reentrant();
 
-// bytes32 indexed keyHash,
   event RandomWordsRequested(
    
+    bytes32 indexed keyHash,
     uint256 requestId,
     uint256 preSeed,
     uint64 indexed subId,
@@ -34,6 +34,7 @@ contract VRFCoordinatorV2Mock is VRFCoordinatorV2Interface, ConfirmedOwner {
     uint32 numWords,
     address indexed sender
   );
+
   event RandomWordsFulfilled(uint256 indexed requestId, uint256 outputSeed, uint96 payment, bool success);
   event SubscriptionCreated(uint64 indexed subId, address owner);
   event SubscriptionFunded(uint64 indexed subId, uint256 oldBalance, uint256 newBalance);
@@ -168,7 +169,7 @@ contract VRFCoordinatorV2Mock is VRFCoordinatorV2Interface, ConfirmedOwner {
   }
 
   function requestRandomWords(
-    // bytes32 _keyHash,
+    bytes32 _keyHash,
     uint64 _subId,
     uint16 _minimumRequestConfirmations,
     uint32 _callbackGasLimit,
@@ -184,7 +185,7 @@ contract VRFCoordinatorV2Mock is VRFCoordinatorV2Interface, ConfirmedOwner {
     s_requests[requestId] = Request({subId: _subId, callbackGasLimit: _callbackGasLimit, numWords: _numWords});
 
     emit RandomWordsRequested(
-      // _keyHash,
+      _keyHash,
       requestId,
       preSeed,
       _subId,

@@ -35,13 +35,13 @@ forge build
 
 # Features
 
-<!-- - **Funding:** Users can fund the contract by sending Ether to it. The contract checks if the amount of Ether sent is equal to or greater than a minimum USD value calculated using the current ETH/USD price feed.
+- **Funding:** Users can fund the contract by sending Ether to it. The contract checks if the amount of Ether sent is equal to or greater than a minimum USD value calculated using the current ETH/USD price feed.
 
 - **Withdrawal:** The owner of the contract can withdraw the accumulated funds. There are two withdrawal methods: a standard withdrawal and a more cost-efficient withdrawal that combines resetting the array of funders and sending the funds in a single transaction.
 
 - **Getters Functions:** Provides getter functions to retrieve information about the contract, including the amount funded by a specific address, the list of funders, and the contract owner.
 
-- **Fallback Functions:** Handles scenarios where someone sends Ether to the contract without explicitly calling the `fund` function. -->
+- **Fallback Functions:** Handles scenarios where someone sends Ether to the contract without explicitly calling the `fund` function.
 
 # Usage
 
@@ -157,6 +157,7 @@ This smart contract is licensed under the MIT License. See [LICENSE](LICENSE) fo
 
 If you appreciated this, feel free to follow me or donate!
 
+ETH/Arbitrum/Polygon/etc Address: 0x344d2EFF6823E4C59E6af62Cd0B9b3757d9ff85C
 
 [![Lhoussaine Ait Aissa Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/lhoussaineph)
 [![Lhoussaine Ait Aissa Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lhoussaine-ait-aissa/)

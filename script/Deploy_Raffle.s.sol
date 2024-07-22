@@ -3,7 +3,7 @@
 pragma solidity ^0.8.19;
 
 
-import { Script , console} from 'forge-std/src/Script.sol';
+import { Script , console} from 'forge-std/Script.sol';
 import { RaffleGame } from '../src/Raffle_Game.sol';
 import { HelperConfig } from './HelperConfig.s.sol';
 import { CreateSubscription , FundSubcription , AddConsumer} from './Interaction.s.sol';
@@ -24,10 +24,12 @@ contract DeployRaffle is Script {
         (
         
         address pricefee,
+        bytes32 gasLane,
         uint256  interval,
         address vrfCoordinator,
         uint64 subId,
         uint32 callbackGasLimit,
+        address link,
         uint256 deployKey
 
         ) = heleprconfig.ActiveNetwork();
@@ -40,17 +42,18 @@ contract DeployRaffle is Script {
 
             FundSubcription fundsubcription = new FundSubcription();
 
-            fundsubcription.fundSubscription( subId , vrfCoordinator /** , Link*/,deployKey);
+            fundsubcription.fundSubscription( subId , vrfCoordinator , link ,deployKey);
 
         }
 
 
 
-        vm.startBroadcast();
+        vm.startBroadcast(deployKey);
 
         rafflegame = new RaffleGame(
         
          pricefee,
+         gasLane,
          interval,
          vrfCoordinator,
          subId,
@@ -64,7 +67,7 @@ contract DeployRaffle is Script {
 
         AddConsumer consumer = new AddConsumer();
 
-        consumer.addConsumer(subId,vrfCoordinator, address(rafflegame) , deployKey);
+        consumer.addConsumer(address(rafflegame) ,vrfCoordinator,subId , deployKey);
         
         return (rafflegame , heleprconfig);
         

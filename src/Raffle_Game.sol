@@ -58,6 +58,7 @@ contract RaffleGame is VRFConsumerBaseV2 {
     uint256 private   s_lasttimestamp;
     uint256 private    s_requestId;
     uint64 private immutable  i_subscriptionid;
+    bytes32 private immutable i_gasLane;
     uint32 private immutable  i_callbackGasLimit;
     uint256 private immutable  i_interval;
     uint256 private immutable  i_deploykey;
@@ -81,6 +82,7 @@ contract RaffleGame is VRFConsumerBaseV2 {
     constructor (
 
         address pricefee,
+        bytes32 gasLane, // keyHash
         uint256  interval,
         address vrfCoordinator,
         uint64 subId,
@@ -89,7 +91,8 @@ contract RaffleGame is VRFConsumerBaseV2 {
      
     ) VRFConsumerBaseV2(vrfCoordinator) {
 
-        i_interval       = interval;
+        i_interval = interval;
+        i_gasLane = gasLane;
         s_pricefee  =   AggregatorV3Interface(pricefee);
         s_vrfCoordinator  =  VRFCoordinatorV2Interface(vrfCoordinator);
         i_subscriptionid  = subId;
@@ -175,7 +178,7 @@ contract RaffleGame is VRFConsumerBaseV2 {
 
 
               s_requestId = s_vrfCoordinator.requestRandomWords(
-
+                i_gasLane,
                 i_subscriptionid,
                 REQUESTCONFIRMATION,
                 i_callbackGasLimit,
