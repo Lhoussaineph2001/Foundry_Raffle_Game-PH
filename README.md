@@ -28,8 +28,8 @@
 ## Quickstart
 
 ```
-git clone https://github.com/Lhoussaineph2001/foundry-Raffle_Game-PH
-cd foundry-Raffle_Game-PH
+git clone https://github.com/Lhoussaineph2001/Foundry_Raffle_Game-PH
+cd Foundry_Raffle_Game-PH
 forge build
 ```
 
